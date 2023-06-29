@@ -48,4 +48,4 @@ jobs:
           export ARM_TENANT_ID=$ARM_TENANT_ID
           export ARM_LOCATION=canadacentral
 
-          ARM_LOCATION=canadacentral TS_ENV=dev terraspace networking sql -auto-approve
+          ARM_LOCATION=canadacentral TS_ENV=dev terraspace networking -auto-approve
