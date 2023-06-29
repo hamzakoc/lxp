@@ -30,14 +30,14 @@ jobs:
       - name: Check TerraSpace Installation
         run: terraspace setup check
         
-      - name: Check az cli
-        run: az version
+      # - name: Check az cli
+      #   run: az version
         
-      - name: az login
+      # - name: az login
       
-        run: |
-          az login --service-principal -u "$ARM_CLIENT_ID" -p "$ARM_CLIENT_SECRET" --tenant "$ARM_TENANT_ID"
-          az account list
+      #   run: |
+      #     az login --service-principal -u "$ARM_CLIENT_ID" -p "$ARM_CLIENT_SECRET" --tenant "$ARM_TENANT_ID"
+      #     az account list
           
       - name: Apply
       
@@ -48,4 +48,4 @@ jobs:
           export ARM_TENANT_ID=$ARM_TENANT_ID
           export ARM_LOCATION=canadacentral
 
-          ARM_LOCATION=canadacentral TS_ENV=dev terraspace up sql -auto-approve
+          ARM_LOCATION=canadacentral TS_ENV=dev terraspace networking sql -auto-approve

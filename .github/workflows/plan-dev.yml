@@ -44,7 +44,7 @@ jobs:
           export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
           export ARM_TENANT_ID=$ARM_TENANT_ID
           export ARM_LOCATION=canadacentral
-          TS_ENV=dev terraspace plan sql -no-color 2>&1 | tee output.log
+          TS_ENV=dev terraspace plan networking -no-color 2>&1 | tee output.log
 
       #     REPORT="$(cat output.log)"
       #     REPORT="${REPORT//'%'/'%25'}"
