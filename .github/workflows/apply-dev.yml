@@ -50,4 +50,4 @@ jobs:
           export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
           export ARM_TENANT_ID=$ARM_TENANT_ID
           export ARM_LOCATION=canadacentral
-          TS_ENV=dev terraspace up caps_aks -auto-approve
+          TS_ENV=dev terraspace up sql -auto-approve
