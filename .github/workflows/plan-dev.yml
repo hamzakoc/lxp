@@ -23,20 +23,19 @@ jobs:
 
       - name: Install TerraSpace
         run: |
-
           bundle update
           bundle
 
-      # - name: Check TerraSpace Installation
-      #   run: terraspace setup check
+      - name: Check TerraSpace Installation
+        run: terraspace setup check
 
-      - name: Check az cli
-        run: az version
+      # - name: Check az cli
+      #   run: az version
 
-      - name: az Login
-        run: |
-          az login --service-principal -u "a341bb43-47a6-4ff9-af19-262972021fa1" -p "zMD8Q~G4fCqKjlKeRVQ5TgubbfixbTWyqYJGDcC-" --tenant "1a93b615-8d62-418a-ac28-22501cf1f978"
-          az account list
+      # - name: az Login
+      #   run: |
+      # az login --service-principal -u "$ARM_CLIENT_ID" -p "$ARM_CLIENT_SECRET" --tenant "$ARM_TENANT_ID"
+      #     az account list
 
       - name: Plan
         run: |
