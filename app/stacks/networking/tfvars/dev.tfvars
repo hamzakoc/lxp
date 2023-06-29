@@ -2,7 +2,7 @@
 resource_group_name = "rg-networking-dev-canadacentral"
 location = "canadacentral"
 tags = {
- 
+ env="dev"
 }
 // *** Virtual Network Values ***
 virtual_network_name = "vnet-d-cc"
