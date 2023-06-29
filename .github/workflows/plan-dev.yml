@@ -31,8 +31,8 @@ jobs:
       - name: Check TerraSpace Installation
         run: terraspace setup check
         
-      - name: Check az cli
-        run: az version
+      # - name: Check az cli
+      #   run: az version
         
       - name: az Login
      
