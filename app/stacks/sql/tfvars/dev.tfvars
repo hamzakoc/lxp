@@ -1,0 +1,17 @@
+location = "canadacentral"
+env = "dev"
+org_name = "bcp"
+workload = "t"
+incremental_number = "1"
+server_version = "12.0"
+mssql_server_name = "mssql-az-dms1-d-cc"
+mssql_database_name = "msdb-az-dms1-d-cc"
+administrator_login = "4dm_n157r470!32@2"  
+administrator_login_password = "4-v3ry-53cr37-p455w0rd"
+collation      = "SQL_Latin1_General_CP1_CI_AS" 
+license_type   = "LicenseIncluded" 
+read_scale     = "false" 
+sku_name       = "S0" 
+zone_redundant = "false"
+tags = {
+}

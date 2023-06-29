@@ -1,0 +1,71 @@
+name: Terraform Plan - Dev
+
+on:
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+env: 
+  ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID_DEV }}
+  ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID_DEV }}
+  ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET_DEV }}
+  ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID_BCPC }}
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    container:
+        image: acrgithubdevcc.azurecr.io/az-cli-lowest:terraspace-v2.2.1
+        credentials:
+          username: "acrgithubdevcc"
+          password: ${{ secrets.ACR_SECRET }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install TerraSpace
+        run: |
+
+          bundle update
+          bundle
+         
+        
+      # - name: Check TerraSpace Installation
+      #   run: terraspace setup check
+        
+      - name: Check az cli
+        run: az version
+        
+      - name: az Login
+     
+        run: |
+          az login --service-principal -u "$ARM_CLIENT_ID" -p "$ARM_CLIENT_SECRET" --tenant "$ARM_TENANT_ID"
+          az account list
+          
+      # - name: Plan
+       
+      #   run: |
+      #     export ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID
+      #     export ARM_CLIENT_ID=$ARM_CLIENT_ID
+      #     export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
+      #     export ARM_TENANT_ID=$ARM_TENANT_ID
+      #     export ARM_LOCATION=canadacentral
+      #     TS_ENV=dev terraspace plan caps_aks -no-color 2>&1 | tee output.log
+      #     REPORT="$(cat output.log)"
+      #     REPORT="${REPORT//'%'/'%25'}"
+      #     REPORT="${REPORT//$'\n'/'%0A'}"
+      #     REPORT="${REPORT//$'\r'/'%0D'}"
+      #     echo "::set-output name=plan_output::$REPORT"
+      #   id: plan
+      # - name: Plan Output Comment Post
+      #   uses: peter-evans/create-or-update-comment@v2
+      #   with:
+      #     token: ${{ secrets.PAT }}
+      #     issue-number: ${{ github.event.pull_request.number }}
+      #     body: |
+      #       **Plan Output** :sparkles: :rocket:
+      #       ```
+      #       ${{join(steps.plan.outputs.*, '\n')}}
+      #       ```
+      #     reactions: 'eyes'    

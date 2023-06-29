@@ -1,0 +1,53 @@
+name: Terraform Apply - Dev
+
+on:
+  push:
+    branches: [ main ]
+
+  workflow_dispatch:
+  
+env: 
+  ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID_DEV }}
+  ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID_DEV }}
+  ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET_DEV }}
+  ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID_BCPC }}
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    container:
+        image: acrgithubdevcc.azurecr.io/az-cli-lowest:terraspace-v2.2.1
+        credentials:
+          username: "acrgithubdevcc"
+          password: ${{ secrets.ACR_SECRET }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install TerraSpace
+        run: |
+
+          bundle update
+          bundle
+        
+      - name: Check TerraSpace Installation
+        run: terraspace setup check
+        
+      - name: Check az cli
+        run: az version
+        
+      - name: az Login
+      
+        run: |
+          az login --service-principal -u "$ARM_CLIENT_ID" -p "$ARM_CLIENT_SECRET" --tenant "$ARM_TENANT_ID"
+          az account list
+          
+      - name: Apply
+      
+        run: |
+          export ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID
+          export ARM_CLIENT_ID=$ARM_CLIENT_ID
+          export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
+          export ARM_TENANT_ID=$ARM_TENANT_ID
+          export ARM_LOCATION=canadacentral
+          TS_ENV=dev terraspace up caps_aks -auto-approve
