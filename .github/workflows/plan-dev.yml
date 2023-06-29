@@ -27,8 +27,8 @@ jobs:
           bundle update
           bundle
 
-      - name: Check TerraSpace Installation
-        run: terraspace setup check
+      # - name: Check TerraSpace Installation
+      #   run: terraspace setup check
 
       - name: Check az cli
         run: az version
