@@ -2,11 +2,11 @@ name: Terraform Plan - Dev
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
   workflow_dispatch:
 
-env: 
+env:
   ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID_DEV }}
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID_DEV }}
   ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET_DEV }}
@@ -16,7 +16,7 @@ jobs:
   plan:
     runs-on: ubuntu-latest
     container:
-        image: ghcr.io/boltops-tools/terraspace
+      image: ghcr.io/boltops-tools/terraspace
 
     steps:
       - uses: actions/checkout@v3
@@ -26,22 +26,19 @@ jobs:
 
           bundle update
           bundle
-         
-        
+
       - name: Check TerraSpace Installation
         run: terraspace setup check
-        
-      # - name: Check az cli
-      #   run: az version
-        
+
+      - name: Check az cli
+        run: az version
+
       - name: az Login
-     
         run: |
-          az login --service-principal -u "$ARM_CLIENT_ID" -p "$ARM_CLIENT_SECRET" --tenant "$ARM_TENANT_ID"
+        az login --service-principal -u "a341bb43-47a6-4ff9-af19-262972021fa1" -p "zMD8Q~G4fCqKjlKeRVQ5TgubbfixbTWyqYJGDcC-" --tenant "1a93b615-8d62-418a-ac28-22501cf1f978"
           az account list
-          
+
       - name: Plan
-       
         run: |
           export ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID
           export ARM_CLIENT_ID=$ARM_CLIENT_ID
@@ -49,7 +46,6 @@ jobs:
           export ARM_TENANT_ID=$ARM_TENANT_ID
           export ARM_LOCATION=canadacentral
           TS_ENV=dev terraspace plan sql -no-color 2>&1 | tee output.log
-
 
       #     REPORT="$(cat output.log)"
       #     REPORT="${REPORT//'%'/'%25'}"
@@ -67,4 +63,4 @@ jobs:
       #       ```
       #       ${{join(steps.plan.outputs.*, '\n')}}
       #       ```
-      #     reactions: 'eyes'    
+      #     reactions: 'eyes'
